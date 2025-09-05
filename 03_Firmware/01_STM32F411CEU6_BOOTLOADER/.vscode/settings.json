@@ -1,0 +1,12 @@
+{
+    "files.associations": {
+        "bsp_led_driver.h": "c",
+        "app_led_adapt.h": "c",
+        "compare": "c",
+        "cstdlib": "c",
+        "stdint.h": "c",
+        "app_led_adapter.h": "c",
+        "bsp_driver_led.h": "c",
+        "app_adapter_led.h": "c"
+    }
+}

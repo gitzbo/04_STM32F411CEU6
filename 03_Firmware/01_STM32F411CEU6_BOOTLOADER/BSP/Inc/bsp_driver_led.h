@@ -15,31 +15,30 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#define LED_DEV_MAX     1                                               /**< max led device support */
+#define LED_DEV_MAX     1                                                       /**< max led device support */
 
-/* GPIO对象 */
+/* LED对象结构体 */
 typedef struct bsp_driver_led_object{
-    uint32_t index;                                                     /**< Record the instance index. */
-    void *user_data;                                                    /**< Record the user data */
+    uint32_t index;                                                             /**< Record the instance index. */
+    void *user_data;                                                            /**< Record the user data */
 
-    void (* pf_led_init)(struct bsp_driver_led_object *dev);            /**< function pointer to device init */ 
-    void (* pf_led_deinit)(struct bsp_driver_led_object *dev);          /**< function pointer to device deinit */
-    void (* pf_led_on)(struct bsp_driver_led_object *dev);              /**< function pointer to set on */ 
-    void (* pf_led_off)(struct bsp_driver_led_object *dev);             /**< function pointer to set off */
-    void (* pf_led_sleep)(struct bsp_driver_led_object *dev);           /**< function pointer to set sleep */
-    void (* pf_led_weakup)(struct bsp_driver_led_object *dev);          /**< function pointer to set weakup */
-
+    void (* pf_led_init)(const struct bsp_driver_led_object *dev);              /**< function pointer to device init */ 
+    void (* pf_led_deinit)(const struct bsp_driver_led_object *dev);            /**< function pointer to device deinit */
+    void (* pf_led_on)(const struct bsp_driver_led_object *dev);                /**< function pointer to set on */ 
+    void (* pf_led_off)(const struct bsp_driver_led_object *dev);               /**< function pointer to set off */
+    void (* pf_led_sleep)(const struct bsp_driver_led_object *dev);             /**< function pointer to set sleep */
+    void (* pf_led_weakup)(const struct bsp_driver_led_object *dev);            /**< function pointer to set weakup */
 }bsp_driver_led_object_t;
 
-/* LED驱动状态 */
+/* LED驱动状态枚举 */
 typedef enum {
-    LED_DRIVER_OK = 0,                                                  /**< 驱动正常 */ 
-    LED_DRIVER_ERROR,                                                   /**< 驱动错误 */ 
-    LED_DRIVER_INVALID_PARAM,                                           /**< 参数异常 */ 
+    LED_DRIVER_OK = 0,                                                          /**< 驱动正常 */ 
+    LED_DRIVER_ERROR,                                                           /**< 驱动错误 */ 
+    LED_DRIVER_INVALID_PARAM,                                                   /**< 参数异常 */ 
 }bsp_driver_led_status_e;
 
 /**
- * @brief led初始化对象
+ * @brief 初始化LED对象
  * 
  * @param index 索引
  * @param dev 设备对象

@@ -22,16 +22,21 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
 #include "bsp_driver_led.h"
+#include "bsp_driver_flash.h"
+#include "bsp_driver_key.h"
 
 #include "app_adapter_led.h"
+#include "app_adapter_flash.h"
+#include "app_adapter_key.h"
+
+#include "app_updata.h"
 
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-
+static void _app_key_callback(const bsp_driver_key_object_t *dev);
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -58,6 +63,38 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+static void _app_key_callback(const bsp_driver_key_object_t *dev)
+{
+  bsp_driver_led_object_t blue_led = {0};
+  bsp_driver_led_get_object(0, &blue_led);
+	
+  switch(dev->key_state.key_state) {
+    case KEY_DRIVER_PRESS_EVENT: {
+      break;
+    }
+    case KEY_DRIVER_RELEASE_EVENT: {
+      break;
+    }
+    case KEY_DRIVER_SHORT_PRESS_EVENT: {
+	  bsp_driver_led_on(&blue_led);
+	  HAL_Delay(100);
+	  bsp_driver_led_off(&blue_led);
+	  HAL_Delay(100);
+      break;
+    }
+    case KEY_DRIVER_LONG_PRESS_EVENT: {
+      break;
+    }
+    case KEY_DRIVER_DOUBLE_SHORT_PRESS_EVENT: {
+      break;
+    }
+    case KEY_DRIVER_CONTINUE_PRESS_EVENT: {
+      break;
+    }
+    default:
+      break;
+  }
+}
 
 /* USER CODE END 0 */
 
@@ -69,7 +106,7 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-
+  SystemInit();
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -91,31 +128,39 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
-  app_adapter_led_register();                   /**> 将实例注册到led驱动中 */
-
-  bsp_driver_led_object_t blue_led = {0};		/**> 对象指针 */
-  bsp_driver_led_get_object(0, &blue_led);      /**> 获取目标对象 */
-
-  bsp_driver_led_init(&blue_led);               /**> 目标对象初始化 */
-
+  /**> 启动独立看门狗 */
+  app_adapter_led_register();                   /**< 将实例注册到led驱动中 */
+  app_adapter_key_register(_app_key_callback);  /**< 将实例注册到key驱动中 */
+  app_adapter_flash_register();					/**< 将实例注册到flash驱动中 */
+  
+  bsp_driver_led_object_t blue_led = {0};		/**< 对象指针 */
+  bsp_driver_led_get_object(0, &blue_led);      /**< 获取目标对象 */
+  bsp_driver_led_init(&blue_led);               /**< 目标对象初始化 */
+  
+  bsp_driver_key_object_t user_key = {0};		/**< 对象指针 */
+  bsp_driver_key_get_object(0, &user_key);		/**< 获取目标对象 */
+  bsp_driver_key_init(&user_key);				/**< 目标对象初始化 */
+  
+  bsp_driver_flash_object_t in_flash = {0};		/**< 对象指针 */
+  bsp_driver_flash_get_object(0, &in_flash);	/**< 获取目标对象 */
+  bsp_driver_flash_init(&in_flash);				/**< 目标对象初始化 */
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
-  {
-    bsp_driver_led_on(&blue_led);
-    HAL_Delay(100);
-    bsp_driver_led_off(&blue_led);
-    HAL_Delay(100);
+  {	  
+	/**< 1.检测强制升级信号 */
+		
+	  
+	/**< 2.检测计划升级信号 */
+	  
 
-	/* 1.判断是否进行IAP升级 */
+	/**< 3.跳转到APPLIATION中执行 */
+	  app_updata_jump_app();
+
+	HAL_Delay(1000);
 	  
-	  
-	/* 2.跳转到APPLIATION中执行 */
-	  
-	  
-    
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

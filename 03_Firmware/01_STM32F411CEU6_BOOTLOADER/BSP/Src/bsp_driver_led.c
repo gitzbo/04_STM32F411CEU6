@@ -50,7 +50,7 @@ bsp_driver_led_status_e bsp_driver_led_init(const bsp_driver_led_object_t *dev)
         return LED_DRIVER_INVALID_PARAM;
     }
 	
-    dev->pf_led_init(&_led_drv_dev[dev->index]);
+    dev->pf_led_init(dev);
 
     return LED_DRIVER_OK;
 }
@@ -61,7 +61,7 @@ bsp_driver_led_status_e bsp_driver_led_deinit(const bsp_driver_led_object_t *dev
         return LED_DRIVER_INVALID_PARAM;
     }
 
-    dev->pf_led_deinit(&_led_drv_dev[dev->index]);
+    dev->pf_led_deinit(dev);
 
     return LED_DRIVER_OK;
 }
@@ -72,7 +72,7 @@ bsp_driver_led_status_e bsp_driver_led_on(const bsp_driver_led_object_t *dev)
         return LED_DRIVER_INVALID_PARAM;
     }
 
-    dev->pf_led_on(&_led_drv_dev[dev->index]);
+    dev->pf_led_on(dev);
 
     return LED_DRIVER_OK;
 }
@@ -83,7 +83,7 @@ bsp_driver_led_status_e bsp_driver_led_off(const bsp_driver_led_object_t *dev)
         return LED_DRIVER_INVALID_PARAM;
     }
 
-    dev->pf_led_off(&_led_drv_dev[dev->index]);
+    dev->pf_led_off(dev);
 
     return LED_DRIVER_OK;
 }
@@ -94,7 +94,7 @@ bsp_driver_led_status_e bsp_driver_led_sleep(const bsp_driver_led_object_t *dev)
         return LED_DRIVER_INVALID_PARAM;
     }
 
-    dev->pf_led_sleep(&_led_drv_dev[dev->index]);
+    dev->pf_led_sleep(dev);
 
     return LED_DRIVER_OK;
 }
@@ -105,7 +105,7 @@ bsp_driver_led_status_e bsp_driver_led_weakup(const bsp_driver_led_object_t *dev
         return LED_DRIVER_INVALID_PARAM;
     }
 
-    dev->pf_led_weakup(&_led_drv_dev[dev->index]);
+    dev->pf_led_weakup(dev);
 
     return LED_DRIVER_OK;
 }

@@ -12,12 +12,13 @@
 
 #include "main.h"
 
-static void _app_adapter_blue_led_init(bsp_driver_led_object_t *dev);
-static void _app_adapter_blue_led_deinit(bsp_driver_led_object_t *dev);
-static void _app_adapter_blue_led_on(bsp_driver_led_object_t *dev);
-static void _app_adapter_blue_led_off(bsp_driver_led_object_t *dev);
-static void _app_adapter_blue_led_sleep(bsp_driver_led_object_t *dev);
-static void _app_adapter_blue_led_weakup(bsp_driver_led_object_t *dev);
+/**< 蓝色led驱动 */
+static void _app_adapter_blue_led_init(const bsp_driver_led_object_t *dev);
+static void _app_adapter_blue_led_deinit(const bsp_driver_led_object_t *dev);
+static void _app_adapter_blue_led_on(const bsp_driver_led_object_t *dev);
+static void _app_adapter_blue_led_off(const bsp_driver_led_object_t *dev);
+static void _app_adapter_blue_led_sleep(const bsp_driver_led_object_t *dev);
+static void _app_adapter_blue_led_weakup(const bsp_driver_led_object_t *dev);
 
 app_adapter_led_status_e app_adapter_led_register(void)
 {
@@ -37,28 +38,27 @@ app_adapter_led_status_e app_adapter_led_register(void)
     return APP_ADAPTER_LED_OK;
 }
 
-
-static void _app_adapter_blue_led_init(bsp_driver_led_object_t *dev)
+static void _app_adapter_blue_led_init(const bsp_driver_led_object_t *dev)
 {
     if(dev == NULL) {
         return ;
     }
-
+    
     __HAL_RCC_GPIOC_CLK_ENABLE();
 
     HAL_GPIO_WritePin(LED_BLUE_1_GPIO_Port, LED_BLUE_1_Pin, GPIO_PIN_SET);
 
     GPIO_InitTypeDef GPIO_InitStruct = {0};
-    GPIO_InitStruct.Pin = LED_BLUE_1_Pin;
-    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-    GPIO_InitStruct.Pull = GPIO_PULLUP;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+    GPIO_InitStruct.Pin     = LED_BLUE_1_Pin;
+    GPIO_InitStruct.Mode    = GPIO_MODE_OUTPUT_PP;
+    GPIO_InitStruct.Pull    = GPIO_PULLUP;
+    GPIO_InitStruct.Speed   = GPIO_SPEED_FREQ_LOW;
     HAL_GPIO_Init(LED_BLUE_1_GPIO_Port, &GPIO_InitStruct);
 
     return ;
 }
 
-static void _app_adapter_blue_led_deinit(bsp_driver_led_object_t *dev)
+static void _app_adapter_blue_led_deinit(const bsp_driver_led_object_t *dev)
 {
 	if(dev == NULL) {
 		return ;
@@ -67,7 +67,7 @@ static void _app_adapter_blue_led_deinit(bsp_driver_led_object_t *dev)
     return ;
 }
 
-static void _app_adapter_blue_led_on(bsp_driver_led_object_t *dev)
+static void _app_adapter_blue_led_on(const bsp_driver_led_object_t *dev)
 {
     if(dev == NULL) {
 		return ;
@@ -79,7 +79,7 @@ static void _app_adapter_blue_led_on(bsp_driver_led_object_t *dev)
 }
 
 
-static void _app_adapter_blue_led_off(bsp_driver_led_object_t *dev)
+static void _app_adapter_blue_led_off(const bsp_driver_led_object_t *dev)
 {
     if(dev == NULL) {
 		return ;
@@ -90,7 +90,7 @@ static void _app_adapter_blue_led_off(bsp_driver_led_object_t *dev)
     return ;
 }
 
-static void _app_adapter_blue_led_sleep(bsp_driver_led_object_t *dev)
+static void _app_adapter_blue_led_sleep(const bsp_driver_led_object_t *dev)
 {
 	if(dev == NULL) {
 		return ;
@@ -99,7 +99,7 @@ static void _app_adapter_blue_led_sleep(bsp_driver_led_object_t *dev)
 	return ;
 }
 
-static void _app_adapter_blue_led_weakup(bsp_driver_led_object_t *dev)
+static void _app_adapter_blue_led_weakup(const bsp_driver_led_object_t *dev)
 {
 	if(dev == NULL) {
 		return ;

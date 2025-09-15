@@ -30,4 +30,8 @@ stm32f411ceu6\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h
 stm32f411ceu6\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
 stm32f411ceu6\main.o: ../Core/Inc/gpio.h
 stm32f411ceu6\main.o: ..\BSP\Inc\bsp_driver_led.h
+stm32f411ceu6\main.o: ..\BSP\Inc\bsp_driver_flash.h
+stm32f411ceu6\main.o: ..\BSP\Inc\bsp_driver_key.h
 stm32f411ceu6\main.o: ..\Adapter\Inc\app_adapter_led.h
+stm32f411ceu6\main.o: ..\Adapter\Inc\app_adapter_flash.h
+stm32f411ceu6\main.o: ..\Adapter\Inc\app_adapter_key.h

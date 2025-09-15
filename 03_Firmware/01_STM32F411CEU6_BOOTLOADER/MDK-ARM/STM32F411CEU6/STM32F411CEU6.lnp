@@ -19,7 +19,14 @@
 "stm32f411ceu6\stm32f4xx_hal_exti.o"
 "stm32f411ceu6\system_stm32f4xx.o"
 "stm32f411ceu6\app_adapter_led.o"
+"stm32f411ceu6\app_adapter_key.o"
+"stm32f411ceu6\app_adapter_flash.o"
+"stm32f411ceu6\app_adapter_w25qxx.o"
+"stm32f411ceu6\app_adapter_iwdt.o"
 "stm32f411ceu6\bsp_driver_led.o"
+"stm32f411ceu6\bsp_driver_key_1.o"
+"stm32f411ceu6\bsp_driver_flash_1.o"
+"stm32f411ceu6\bsp_driver_iwdt.o"
 --strict --scatter "STM32F411CEU6\STM32F411CEU6.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

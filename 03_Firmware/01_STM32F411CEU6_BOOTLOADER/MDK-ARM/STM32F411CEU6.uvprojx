@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F411xE</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;..\Adapter\Inc;..\BSP\Inc</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;..\Adapter\Inc;..\BSP\Inc;..\APP\Inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -504,6 +504,26 @@
               <FileType>1</FileType>
               <FilePath>..\Adapter\Src\app_adapter_led.c</FilePath>
             </File>
+            <File>
+              <FileName>app_adapter_key.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Adapter\Src\app_adapter_key.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_adapter_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Adapter\Src\app_adapter_flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_adapter_w25qxx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Adapter\Src\app_adapter_w25qxx.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_adapter_iwdt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Adapter\Src\app_adapter_iwdt.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -513,6 +533,36 @@
               <FileName>bsp_driver_led.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\BSP\Src\bsp_driver_led.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_driver_key.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\BSP\Src\bsp_driver_key.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_driver_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\BSP\Src\bsp_driver_flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_driver_iwdt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\BSP\Src\bsp_driver_iwdt.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>APP</GroupName>
+          <Files>
+            <File>
+              <FileName>app_updata.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\APP\Src\app_updata.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_ymodel.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\APP\Src\app_ymodel.c</FilePath>
             </File>
           </Files>
         </Group>

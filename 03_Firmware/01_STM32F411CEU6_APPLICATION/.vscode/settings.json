@@ -1,0 +1,29 @@
+{
+    "files.associations": {
+        "bsp_led_driver.h": "c",
+        "app_led_adapt.h": "c",
+        "compare": "c",
+        "cstdlib": "c",
+        "stdint.h": "c",
+        "app_led_adapter.h": "c",
+        "bsp_driver_led.h": "c",
+        "app_adapter_led.h": "c",
+        "app_adapter_key.h": "c",
+        "main.h": "c",
+        "bsp_driver_key.h": "c",
+        "app_updata.h": "c",
+        "string.h": "c",
+        "app_ymodel.h": "c",
+        "bsp_driver_flash.h": "c",
+        "bsp_driver_iwdt.h": "c",
+        "app_adapter_flash.h": "c",
+        "app_adapter_w25q64.h": "c",
+        "app_adapter_w25qxx.h": "c",
+        "bsp_driver_uart.h": "c",
+        "app_adapter_uart.h": "c",
+        "usart.h": "c",
+        "lwrb.h": "c",
+        "gpio.h": "c"
+    },
+    "cmake.sourceDirectory": "D:/Project/04_STM32F411CET6/03_Firmware/01_STM32F411CEU6_BOOTLOADER/Drivers/CMSIS/NN/Source/PoolingFunctions"
+}

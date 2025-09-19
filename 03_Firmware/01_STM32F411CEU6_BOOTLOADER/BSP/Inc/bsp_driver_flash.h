@@ -14,7 +14,19 @@
 #include <stdint.h>
 #include <stddef.h>
 
-#define FLASH_DEV_MAX                2                             /**< flash设备最大数量 */
+#define FLASH_DEV_MAX       2                             				/**< FLASH设备最大数量 */
+
+#define UPDATA_INFO_START_ADDR	0x08008000U								/**< 更新数据信息地址 */
+#define UPDATA_INFO_END_ADDR	0x0800BFFFU								/**< 更新数据起始地址 */
+
+#define APP1_START_ADDR  		0x0800C000U     						/**< APP1起始地址 */
+#define APP1_END_ADDR			0x0803FFFFU								/**< APP1结束地址 */
+#define APP2_START_ADDR  		0x08040000U     						/**< APP2起始地址 */
+#define APP2_END_ADDR			0x08071FFFU								/**< APP2结束地址 */
+#define USER_DATA_START_ADDR	0x08072000U								/**< 资源分区起始地址 */
+#define USER_DATA_END_ADDR		0x08080000U								/**< 资源分区结束地址 */			
+#define APP_FLASH_SIZE	 		(APP1_END_ADDR - APP1_START_ADDR)		/**< APP FLASH大小 */
+#define APP_VER_OFFSET			0x800									/**< 版本信息偏移 */
 
 /**< flash驱动文件 */
 typedef enum {
@@ -115,6 +127,22 @@ bsp_driver_flash_status_e bsp_driver_flash_read(const bsp_driver_flash_object_t 
                                                 uint32_t start_addr, 
                                                 uint8_t *data,
                                                 uint32_t len);
+
+/**
+ * @brief flash拷贝函数
+ * 
+ * @param host 待拷贝设备
+ * @param host_addr 待拷贝地址
+ * @param target 目标设备
+ * @param target_addr 目标地址
+ * @param target_len 目标长度
+ * @return bsp_driver_flash_status_e 运行状态
+ */
+bsp_driver_flash_status_e bsp_driver_flash_copy( const bsp_driver_flash_object_t *host,
+												 uint32_t host_addr,
+												 const bsp_driver_flash_object_t *target,
+												 uint32_t target_addr,
+												 uint32_t target_len);
 
 
 #endif

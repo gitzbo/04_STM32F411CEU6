@@ -18,19 +18,12 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "iwdg.h"
+#include "usart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "bsp_driver_led.h"
-#include "bsp_driver_flash.h"
-#include "bsp_driver_key.h"
-
-#include "app_adapter_led.h"
-#include "app_adapter_flash.h"
-#include "app_adapter_key.h"
-
-#include "app_updata.h"
 
 /* USER CODE END Includes */
 
@@ -106,7 +99,7 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-  SystemInit();
+
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -127,39 +120,53 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_USART1_UART_Init();
+  MX_IWDG_Init();
   /* USER CODE BEGIN 2 */
-  /**> 启动独立看门狗 */
-  app_adapter_led_register();                   /**< 将实例注册到led驱动中 */
-  app_adapter_key_register(_app_key_callback);  /**< 将实例注册到key驱动中 */
-  app_adapter_flash_register();					/**< 将实例注册到flash驱动中 */
-  
-  bsp_driver_led_object_t blue_led = {0};		/**< 对象指针 */
-  bsp_driver_led_get_object(0, &blue_led);      /**< 获取目标对象 */
-  bsp_driver_led_init(&blue_led);               /**< 目标对象初始化 */
-  
-  bsp_driver_key_object_t user_key = {0};		/**< 对象指针 */
-  bsp_driver_key_get_object(0, &user_key);		/**< 获取目标对象 */
-  bsp_driver_key_init(&user_key);				/**< 目标对象初始化 */
-  
-  bsp_driver_flash_object_t in_flash = {0};		/**< 对象指针 */
-  bsp_driver_flash_get_object(0, &in_flash);	/**< 获取目标对象 */
-  bsp_driver_flash_init(&in_flash);				/**< 目标对象初始化 */
+  	app_adapter_iwdg_register();				  /**< 将实例注册到iwdg驱动中 */
+	
+	bsp_driver_iwdg_object_t iwdg_obj = {0};	  /**< 对象指针 */				
+	bsp_driver_iwdg_get_object(0, &iwdg_obj);	  /**< 获取目标对象 */
+	bsp_driver_iwdg_init(&iwdg_obj);			  /**< 目标对象初始化 */
+	
+    app_adapter_led_register();                   /**< 将实例注册到led驱动中 */
+    app_adapter_key_register(_app_key_callback);  /**< 将实例注册到key驱动中 */
+    app_adapter_flash_register();                 /**< 将实例注册到flash驱动中 */
+    app_adapter_uart_register();                  /**< 将实例注册到uart驱动中 */
+    
+    bsp_driver_led_object_t blue_led = {0};		  /**< 对象指针 */
+    bsp_driver_led_get_object(0, &blue_led);      /**< 获取目标对象 */
+    bsp_driver_led_init(&blue_led);               /**< 目标对象初始化 */
+    
+    bsp_driver_key_object_t user_key = {0};		  /**< 对象指针 */
+    bsp_driver_key_get_object(0, &user_key);	  /**< 获取目标对象 */
+    bsp_driver_key_init(&user_key);               /**< 目标对象初始化 */
+    
+    bsp_driver_flash_object_t in_flash = {0};	  /**< 对象指针 */
+    bsp_driver_flash_get_object(0, &in_flash);	  /**< 获取目标对象 */
+    bsp_driver_flash_init(&in_flash);             /**< 目标对象初始化 */
+
+    bsp_driver_uart_object_t uart1_obj = {0};     /**< 对象指针 */
+    bsp_driver_uart_get_object(0, &uart1_obj);    /**< 获取目标对象 */
+    bsp_driver_uart_init(&uart1_obj);             /**< 目标对象初始化 */
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {	  
-	/**< 1.检测强制升级信号 */
-		
+		/**< 1.喂狗 */
+		bsp_driver_iwdg_feed(&iwdg_obj);
 	  
-	/**< 2.检测计划升级信号 */
+		/**< 2.检测强制升级信号 */
+		app_updata_force();
 	  
-
-	/**< 3.跳转到APPLIATION中执行 */
-	  app_updata_jump_app();
-
-	HAL_Delay(1000);
+		/**< 3.检测计划升级信号 */
+		app_updata_general();
+	  
+		/**< 4.跳转到APPLIATION中执行 */
+		app_updata_jump_app();
 	  
     /* USER CODE END WHILE */
 
@@ -185,8 +192,9 @@ void SystemClock_Config(void)
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_LSI|RCC_OSCILLATORTYPE_HSE;
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
+  RCC_OscInitStruct.LSIState = RCC_LSI_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
   RCC_OscInitStruct.PLL.PLLM = 12;

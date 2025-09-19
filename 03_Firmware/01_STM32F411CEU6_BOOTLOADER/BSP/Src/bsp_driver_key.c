@@ -62,7 +62,7 @@ bsp_driver_key_status_e bsp_driver_key_get_object(uint32_t index, bsp_driver_key
 		return KEY_DRIVER_ERROR;	
 	}
 
-	dev = &_key_drv_dev[index];
+	*dev = _key_drv_dev[index];
 	
 	return KEY_DRIVER_OK;
 }

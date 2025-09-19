@@ -73,7 +73,7 @@ bsp_driver_flash_status_e bsp_driver_flash_deinit(const bsp_driver_flash_object_
 
 bsp_driver_flash_status_e bsp_driver_flash_erase(const bsp_driver_flash_object_t *dev, 
                                                 uint32_t start_addr, 
-                                                uint32_t end_addr)
+                                                uint32_t len)
 {
     if((dev == NULL) || 
         (dev->index >= FLASH_DEV_MAX) || 
@@ -81,7 +81,7 @@ bsp_driver_flash_status_e bsp_driver_flash_erase(const bsp_driver_flash_object_t
         return FLASH_DRIVER_ERROR;
     }
 
-    _flash_drv_dev[dev->index].pf_flash_erase(dev, start_addr, end_addr);
+    _flash_drv_dev[dev->index].pf_flash_erase(dev, start_addr, len);
 
     return FLASH_DRIVER_OK;
 }   
@@ -118,7 +118,32 @@ bsp_driver_flash_status_e bsp_driver_flash_read(const bsp_driver_flash_object_t 
     return FLASH_DRIVER_OK;
 }
 
-
+bsp_driver_flash_status_e bsp_driver_flash_copy( const bsp_driver_flash_object_t *host,
+												 uint32_t host_addr,
+												 const bsp_driver_flash_object_t *target,
+												 uint32_t target_addr,
+												 uint32_t target_len)
+{
+	if((host == NULL) || 
+		(target == NULL) || 
+		(target_len == 0) || 
+		(_flash_drv_dev[host->index].pf_flash_read == NULL) || 
+		(_flash_drv_dev[target->index].pf_flash_write == NULL)) {
+		return FLASH_DRIVER_ERROR;
+	}
+	
+	bsp_driver_flash_erase(target, target_addr, target_len);
+	
+	uint32_t data = 0;
+	for(uint32_t i = 0; i < target_len; i ++) {
+		_flash_drv_dev[host->index].pf_flash_read(host, host_addr, (uint8_t *)&data, 4);
+		_flash_drv_dev[host->index].pf_flash_write(target, target_addr, (uint8_t *)&data, 4);
+		host_addr += 4;
+		target_addr += 4;
+	}
+	
+	return FLASH_DRIVER_OK;
+}
 
 
 

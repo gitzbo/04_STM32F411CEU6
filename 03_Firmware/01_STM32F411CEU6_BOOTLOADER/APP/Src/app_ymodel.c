@@ -229,6 +229,7 @@ int32_t app_ymodem_receive(uint32_t addr ,uint8_t *buf)
 	
 	bsp_driver_iwdg_object_t iwdg_obj = {0};
 	bsp_driver_iwdg_get_object(0, &iwdg_obj);
+	
 	bsp_driver_flash_object_t flash1_obj = {0};
 	bsp_driver_flash_get_object(0, &flash1_obj);
 	FlashDestination = addr;
@@ -262,7 +263,9 @@ int32_t app_ymodem_receive(uint32_t addr ,uint8_t *buf)
 				
 				/**< 普通包 */
 				default:
-					start_time = HAL_GetTick();			/**< 有数据则更新超时时间 */
+					/**< 有数据则更新超时时间 */
+					start_time = HAL_GetTick(); 
+				
 					if ((packet_data[PACKET_SEQNO_INDEX] & 0xff) != (packets_received & 0xff)) {
 						_app_ymodel_send_byte(NAK);
 					}

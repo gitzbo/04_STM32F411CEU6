@@ -37,7 +37,7 @@
 "stm32f411ceu6\app_ymodel.o"
 "stm32f411ceu6\lwrb.o"
 "stm32f411ceu6\lwrb_ex.o"
---strict --scatter "STM32F411CEU6\STM32F411CEU6.sct"
+--library_type=microlib --strict --scatter "STM32F411CEU6\STM32F411CEU6.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
 --list "STM32F411CEU6.map" -o STM32F411CEU6\STM32F411CEU6.axf

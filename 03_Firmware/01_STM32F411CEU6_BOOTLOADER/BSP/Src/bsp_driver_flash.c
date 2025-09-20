@@ -124,9 +124,9 @@ bsp_driver_flash_status_e bsp_driver_flash_copy( const bsp_driver_flash_object_t
 												 uint32_t target_addr,
 												 uint32_t target_len)
 {
-	if((host == NULL) || 
-		(target == NULL) || 
-		(target_len == 0) || 
+	if((host == NULL) 										|| 
+		(target == NULL) 									|| 
+		(target_len == 0) 									|| 
 		(_flash_drv_dev[host->index].pf_flash_read == NULL) || 
 		(_flash_drv_dev[target->index].pf_flash_write == NULL)) {
 		return FLASH_DRIVER_ERROR;
@@ -134,12 +134,12 @@ bsp_driver_flash_status_e bsp_driver_flash_copy( const bsp_driver_flash_object_t
 	
 	bsp_driver_flash_erase(target, target_addr, target_len);
 	
-	uint32_t data = 0;
-	for(uint32_t i = 0; i < target_len; i ++) {
-		_flash_drv_dev[host->index].pf_flash_read(host, host_addr, (uint8_t *)&data, 4);
-		_flash_drv_dev[host->index].pf_flash_write(target, target_addr, (uint8_t *)&data, 4);
-		host_addr += 4;
-		target_addr += 4;
+	uint32_t data[512] = {0};
+	for(uint32_t i = 0; i < (target_len / 4 / 512); i ++) {
+		_flash_drv_dev[host->index].pf_flash_read(host, host_addr, (uint8_t *)&data, sizeof(data));
+		_flash_drv_dev[host->index].pf_flash_write(target, target_addr, (uint8_t *)&data, sizeof(data));
+		host_addr += sizeof(data);
+		target_addr += sizeof(data);
 	}
 	
 	return FLASH_DRIVER_OK;

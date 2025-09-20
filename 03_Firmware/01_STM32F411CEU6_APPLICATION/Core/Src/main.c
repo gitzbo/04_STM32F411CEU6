@@ -47,8 +47,8 @@ static void _app_key_callback(const bsp_driver_key_object_t *dev);
 /* USER CODE BEGIN PV */
 
 const app_updata_info_t firmware_version __attribute__((section(".ARM.__at_0x0800C800"))) = {
-	.app_name   = "STM32f411",
-	.sf_ver 	= 1001,
+	.app_name   = "STM32f411CE",
+	.sf_ver 	= 1013,
 	.hw_ver 	= 1001,
 	.build_data = __DATE__,
 	.build_time = __TIME__,
@@ -107,7 +107,7 @@ int main(void)
 
   /* USER CODE BEGIN 1 */
 	__enable_irq();								/**< 开启全局中断 */
-
+	
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -131,7 +131,7 @@ int main(void)
   MX_USART1_UART_Init();
   MX_IWDG_Init();
   /* USER CODE BEGIN 2 */
-	app_adapter_iwdg_register();				/**< 将实例注册到iwdg驱动中 */
+	app_adapter_iwdg_register();				  /**< 将实例注册到iwdg驱动中 */
 	
 	bsp_driver_iwdg_object_t iwdg_obj = {0};	  /**< 对象指针 */				
     bsp_driver_iwdg_get_object(0, &iwdg_obj);	  /**< 获取目标对象 */
@@ -157,6 +157,7 @@ int main(void)
     bsp_driver_uart_object_t uart1_obj = {0};     /**< 对象指针 */
     bsp_driver_uart_get_object(0, &uart1_obj);    /**< 获取目标对象 */
     bsp_driver_uart_init(&uart1_obj);             /**< 目标对象初始化 */
+	
 	bsp_driver_uart_send(&uart1_obj, 
 							(uint8_t *)&"system begin!", 
 							strlen("system begin!"), 

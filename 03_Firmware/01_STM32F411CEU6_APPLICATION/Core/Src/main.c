@@ -18,6 +18,9 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "cmsis_os.h"
+#include "dma.h"
+#include "i2c.h"
 #include "iwdg.h"
 #include "usart.h"
 #include "gpio.h"
@@ -29,7 +32,7 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-static void _app_key_callback(const bsp_driver_key_object_t *dev);
+
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -46,55 +49,18 @@ static void _app_key_callback(const bsp_driver_key_object_t *dev);
 
 /* USER CODE BEGIN PV */
 
-const app_updata_info_t firmware_version __attribute__((section(".ARM.__at_0x0800C800"))) = {
-	.app_name   = "STM32f411CE",
-	.sf_ver 	= 1013,
-	.hw_ver 	= 1001,
-	.build_data = __DATE__,
-	.build_time = __TIME__,
-};	
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
+void MX_FREERTOS_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-static void _app_key_callback(const bsp_driver_key_object_t *dev)
-{
-  bsp_driver_led_object_t blue_led = {0};
-  bsp_driver_led_get_object(0, &blue_led);
-	
-  switch(dev->key_state.key_state) {
-    case KEY_DRIVER_PRESS_EVENT: {
-      break;
-    }
-    case KEY_DRIVER_RELEASE_EVENT: {
-      break;
-    }
-    case KEY_DRIVER_SHORT_PRESS_EVENT: {
-	  bsp_driver_led_on(&blue_led);
-	  HAL_Delay(100);
-	  bsp_driver_led_off(&blue_led);
-	  HAL_Delay(100);
-      break;
-    }
-    case KEY_DRIVER_LONG_PRESS_EVENT: {
-      break;
-    }
-    case KEY_DRIVER_DOUBLE_SHORT_PRESS_EVENT: {
-      break;
-    }
-    case KEY_DRIVER_CONTINUE_PRESS_EVENT: {
-      break;
-    }
-    default:
-      break;
-  }
-}
+
 
 /* USER CODE END 0 */
 
@@ -128,52 +94,29 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_USART1_UART_Init();
   MX_IWDG_Init();
+  MX_I2C1_Init();
+  MX_USART6_UART_Init();
   /* USER CODE BEGIN 2 */
-	app_adapter_iwdg_register();				  /**< 将实例注册到iwdg驱动中 */
-	
-	bsp_driver_iwdg_object_t iwdg_obj = {0};	  /**< 对象指针 */				
-    bsp_driver_iwdg_get_object(0, &iwdg_obj);	  /**< 获取目标对象 */
-    bsp_driver_iwdg_init(&iwdg_obj);			  /**< 目标对象初始化 */
-
-    app_adapter_led_register();                   /**< 将实例注册到led驱动中 */
-    app_adapter_key_register(_app_key_callback);  /**< 将实例注册到key驱动中 */
-    app_adapter_flash_register();                 /**< 将实例注册到flash驱动中 */
-    app_adapter_uart_register();                  /**< 将实例注册到uart驱动中 */
-    
-    bsp_driver_led_object_t blue_led = {0};		  /**< 对象指针 */
-    bsp_driver_led_get_object(0, &blue_led);      /**< 获取目标对象 */
-    bsp_driver_led_init(&blue_led);               /**< 目标对象初始化 */
-    
-    bsp_driver_key_object_t user_key = {0};		  /**< 对象指针 */
-    bsp_driver_key_get_object(0, &user_key);	  /**< 获取目标对象 */
-    bsp_driver_key_init(&user_key);               /**< 目标对象初始化 */
-    
-    bsp_driver_flash_object_t in_flash = {0};	  /**< 对象指针 */
-    bsp_driver_flash_get_object(0, &in_flash);	  /**< 获取目标对象 */
-    bsp_driver_flash_init(&in_flash);             /**< 目标对象初始化 */
-
-    bsp_driver_uart_object_t uart1_obj = {0};     /**< 对象指针 */
-    bsp_driver_uart_get_object(0, &uart1_obj);    /**< 获取目标对象 */
-    bsp_driver_uart_init(&uart1_obj);             /**< 目标对象初始化 */
-	
-	bsp_driver_uart_send(&uart1_obj, 
-							(uint8_t *)&"system begin!", 
-							strlen("system begin!"), 
-							strlen("system begin!"));
   /* USER CODE END 2 */
+
+  /* Init scheduler */
+  osKernelInitialize();
+
+  /* Call init function for freertos objects (in cmsis_os2.c) */
+  MX_FREERTOS_Init();
+
+  /* Start scheduler */
+  osKernelStart();
+
+  /* We should never get here as control is now taken by the scheduler */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  bsp_driver_led_on(&blue_led);
-	  HAL_Delay(100);
-	  bsp_driver_led_off(&blue_led);
-	  HAL_Delay(100);
-	  
-		bsp_driver_iwdg_feed(&iwdg_obj);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

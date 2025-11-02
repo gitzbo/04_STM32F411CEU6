@@ -31,20 +31,8 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "bsp_driver_led.h"
-#include "bsp_driver_flash.h"
-#include "bsp_driver_key.h"
-#include "bsp_driver_uart.h"
-#include "bsp_driver_iwdg.h"
 
-#include "app_adapter_led.h"
-#include "app_adapter_flash.h"
-#include "app_adapter_key.h"
-#include "app_adapter_uart.h"
-#include "app_adapter_iwdg.h"
 
-#include "app_updata.h"
-#include "app_ymodel.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -59,7 +47,7 @@ extern "C" {
 
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
-
+extern void diapInit(void);
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/
@@ -74,6 +62,18 @@ void Error_Handler(void);
 #define LED_BLUE_1_GPIO_Port GPIOC
 #define KEY_USER_1_Pin GPIO_PIN_0
 #define KEY_USER_1_GPIO_Port GPIOA
+#define KEY_1_Pin GPIO_PIN_3
+#define KEY_1_GPIO_Port GPIOA
+#define KEY_2_Pin GPIO_PIN_4
+#define KEY_2_GPIO_Port GPIOA
+#define KEY_3_Pin GPIO_PIN_5
+#define KEY_3_GPIO_Port GPIOA
+#define KEY_4_Pin GPIO_PIN_6
+#define KEY_4_GPIO_Port GPIOA
+#define OLED_SCL_Pin GPIO_PIN_6
+#define OLED_SCL_GPIO_Port GPIOB
+#define OLED_SDA_Pin GPIO_PIN_7
+#define OLED_SDA_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 

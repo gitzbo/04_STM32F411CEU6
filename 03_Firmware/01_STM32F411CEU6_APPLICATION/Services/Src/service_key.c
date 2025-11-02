@@ -22,10 +22,10 @@ service_key_status_e service_key_init(void)
     adapter_key_object_t key_obj = {
         .index 			= 0,
         .user_data 		= NULL,
-        .pf_key_init    = bsp_key_init,
-        .pf_key_deinit  = bsp_key_deinit,                
-        .pf_key_sleep   = bsp_key_sleep,
-        .pf_key_weakup  = bsp_key_weakup,
+        .pf_key_init    = (adapter_key_status_e (*)(void))bsp_key_init,
+        .pf_key_deinit  = (adapter_key_status_e (*)(void))bsp_key_deinit,                
+        .pf_key_sleep   = (adapter_key_status_e (*)(void))bsp_key_sleep,
+        .pf_key_weakup  = (adapter_key_status_e (*)(void))bsp_key_weakup,
     };
 	adapter_key_register(0, &key_obj);
 

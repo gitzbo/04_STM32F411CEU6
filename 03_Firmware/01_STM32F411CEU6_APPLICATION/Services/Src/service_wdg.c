@@ -17,14 +17,14 @@
 #include "task.h"
 #include "semphr.h"
 
+#include <string.h>
+
 #ifndef SERVICE_MAX_DAEMON_TASK
 #define SERVICE_MAX_DAEMON_TASK 20
 #endif
 
-
 static service_wdg_task_info_t _g_iwdg_task_info_list[SERVICE_MAX_DAEMON_TASK]; /**< 线程信息列表 */
 static SemaphoreHandle_t _g_iwdg_mutex = {0};                                   /**< iwdg 互斥锁 */
-static void _service_wdg_daemon_task(void *pParams);                            /**< 守护线程 */
 
 service_wdg_status_e service_wdg_init(void)
 {
@@ -32,9 +32,10 @@ service_wdg_status_e service_wdg_init(void)
     adapter_iwdg_object_t iwdg_obj = {
         .index          = 0,
         .user_data      = NULL,
-        .pf_iwdg_init   = bsp_iwdg_init,
-        .pf_iwdg_deinit = bsp_iwdg_deinit,
-        .pf_iwdg_feed   = bsp_iwdg_feed,
+        .pf_iwdg_init   = (adapter_iwdg_status_e (*)(void))bsp_iwdg_init,
+        .pf_iwdg_deinit = (adapter_iwdg_status_e (*)(void))bsp_iwdg_deinit,
+        .pf_iwdg_feed   = (adapter_iwdg_status_e (*)(void))bsp_iwdg_feed,
+		.pf_iwdg_restart= (adapter_iwdg_status_e (*)(void))bsp_iwdg_restart,
     };
     adapter_iwdg_register(iwdg_obj.index, &iwdg_obj);
 
@@ -42,21 +43,27 @@ service_wdg_status_e service_wdg_init(void)
     adapter_iwdg_init(&iwdg_obj);
 
     /**< 3.创建看门狗线程 */
-
+	if (pdPASS != xTaskCreate(service_wdg_task,           // 任务函数指针
+                              "wtg_task",                 // 任务名称（调试用）
+                              2048,                       // 任务栈大小
+                              NULL,                       // 任务参数
+                              27,                         // 任务优先级
+                              NULL)) {                    // 任务句柄指针
+        return SERVICE_WDG_STATUS_ERROR;
+    }
+	
     /**< 4.创建互斥锁 */
     _g_iwdg_mutex = xSemaphoreCreateMutex();
     if (NULL == _g_iwdg_mutex) {
         return SERVICE_WDG_STATUS_ERROR;
     }
 
-
-
 	return SERVICE_WDG_STATUS_OK;
 }
 
 service_wdg_status_e service_wdg_daemon_register(const char *p_task_name, const uint32_t heart_beat_timeout_ms, void (*pf_timeout_cb)(void))
 {
-    int ret = -1;
+    service_wdg_status_e ret = SERVICE_WDG_STATUS_ERROR;
     if (pdTRUE == xSemaphoreTake(_g_iwdg_mutex, portMAX_DELAY)) {
         for (uint8_t i = 0; i < SERVICE_MAX_DAEMON_TASK; i++) {
             if (!_g_iwdg_task_info_list[i].is_registered) {
@@ -69,7 +76,7 @@ service_wdg_status_e service_wdg_daemon_register(const char *p_task_name, const 
                 _g_iwdg_task_info_list[i].is_registered             = true;
 
                 // 成功
-                ret = 0;
+                ret = SERVICE_WDG_STATUS_OK;
                 break;
             }
         }
@@ -77,7 +84,7 @@ service_wdg_status_e service_wdg_daemon_register(const char *p_task_name, const 
         xSemaphoreGive(_g_iwdg_mutex);
     }
 
-    if (0 != ret) {
+    if (SERVICE_WDG_STATUS_OK != ret) {
         // ESP_LOGE(MOD_TAG, "task '%s' register failed", pTaskName);
     }
     else {
@@ -87,13 +94,6 @@ service_wdg_status_e service_wdg_daemon_register(const char *p_task_name, const 
     return ret;
 }
 
-/**
- * @brief 	 更新指定任务的心跳
- * @param 	 pTaskName, 守护任务的名称，用于识别特定的任务
- * @retval 	 0表示心跳成功更新，-1表示参数无效或任务未找到
- * @author 	 chenningzhan
- * @note 	 None
- */
 int service_wdg_daemon_heart_beat(const char *task_name)
 {
     if (NULL == task_name) {
@@ -129,7 +129,7 @@ int service_wdg_daemon_heart_beat(const char *task_name)
     return ret;
 }
 
-static void _service_wdg_daemon_task(void *pParams)
+void service_wdg_task(void *pParams)
 {
     (void)pParams;
 
@@ -161,8 +161,8 @@ static void _service_wdg_daemon_task(void *pParams)
                         _g_iwdg_task_info_list[i].pf_timeout_cb();
                     }
 
-                    /**< 直接重启 */
-//                    HAL_NVIC_SystemReset();
+                    /**< 线程喂狗失败直接重启 */
+                    adapter_iwdg_restart(&iwdg_obj);
                 }
             }
             xSemaphoreGive(_g_iwdg_mutex);

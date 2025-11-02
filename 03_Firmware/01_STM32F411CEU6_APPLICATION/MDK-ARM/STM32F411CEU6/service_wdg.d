@@ -16,3 +16,4 @@ stm32f411ceu6\service_wdg.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/
 stm32f411ceu6\service_wdg.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
 stm32f411ceu6\service_wdg.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 stm32f411ceu6\service_wdg.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
+stm32f411ceu6\service_wdg.o: D:\sofeware\keil\Keil_v5\ARM\ARM_Compiler_5.06u7\Bin\..\include\string.h

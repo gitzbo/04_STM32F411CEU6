@@ -49,19 +49,22 @@ bsp_key_status_e bsp_key_get(bsp_key_id_e id, uint8_t *state)
     }
 
     switch (id) {
-    case KEY_TOP_ID: {
-        *state = HAL_GPIO_ReadPin(KEY_1_GPIO_Port, KEY_1_Pin);
-    }
-    case KEY_MID_ID: {
-        *state = HAL_GPIO_ReadPin(KEY_2_GPIO_Port, KEY_2_Pin);
-    }
-    case KEY_DOWN_ID: {
-        *state = HAL_GPIO_ReadPin(KEY_3_GPIO_Port, KEY_3_Pin);
-    }
-    default: {
-        return BSP_KEY_STATUS_ERROR;
-    }
-    }
+		case KEY_TOP_ID: {
+			*state = HAL_GPIO_ReadPin(KEY_1_GPIO_Port, KEY_1_Pin);
+			break;
+		}
+		case KEY_MID_ID: {
+			*state = HAL_GPIO_ReadPin(KEY_2_GPIO_Port, KEY_2_Pin);
+			break;
+		}
+		case KEY_DOWN_ID: {
+			*state = HAL_GPIO_ReadPin(KEY_3_GPIO_Port, KEY_3_Pin);
+			break;
+		}
+		default: {
+			return BSP_KEY_STATUS_ERROR;
+		}
+	}
 
     return BSP_KEY_STATUS_OK;
 }

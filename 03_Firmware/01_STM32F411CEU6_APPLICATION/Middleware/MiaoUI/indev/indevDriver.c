@@ -25,13 +25,13 @@
  * Created on: 2025-02-08
  */
 #include "indevDriver.h"
-extern UI_ACTION ButtonScan(void);
+// extern UI_ACTION ButtonScan(void);
 
 UI_ACTION indevScan(void)
 {
     /* 放入你的按键扫描代码 */
-    return ButtonScan();
-//	return UI_ACTION_NONE;
+    // return ButtonScan();
+	return UI_ACTION_NONE;
 }
 
 

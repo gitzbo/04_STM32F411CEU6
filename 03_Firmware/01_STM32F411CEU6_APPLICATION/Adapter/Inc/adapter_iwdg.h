@@ -27,6 +27,8 @@ typedef struct adapter_iwdg_object {
     adapter_iwdg_status_e (*pf_iwdg_init)(void);                                     /**< function pointer to device init   */
     adapter_iwdg_status_e (*pf_iwdg_deinit)(void);                                   /**< function pointer to device deinit */
     adapter_iwdg_status_e (*pf_iwdg_feed)(void);                                     /**< function pointer to device refresh*/ 
+    adapter_iwdg_status_e (*pf_iwdg_restart)(void);                                  /**< function pointer to device restart*/
+
 } adapter_iwdg_object_t;
 
 /**
@@ -70,6 +72,14 @@ adapter_iwdg_status_e adapter_iwdg_deinit(const adapter_iwdg_object_t *dev);
  * @return adapter_iwdg_status_e 运行状态
  */
 adapter_iwdg_status_e adapter_iwdg_feed(const adapter_iwdg_object_t *dev);
+
+/**
+ * @brief 直接重启
+ * 
+ * @param dev 设备对象
+ * @return adapter_iwdg_status_e 运行状态
+ */
+adapter_iwdg_status_e adapter_iwdg_restart(const adapter_iwdg_object_t *dev);
 
 #endif
 

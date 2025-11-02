@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F411xE,LWRB_DISABLE_ATOMIC,USER_VECT_TAB_ADDRESS</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;..\BSP\Inc;..\Adapter\Inc;..\Wrapper\Inc;..\Services\Inc;..\Platform\Inc;..\OSAL\Inc;..\APP\Inc</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;..\BSP\Inc;..\Adapter\Inc;..\Wrapper\Inc;..\Services\Inc;..\Platform\Inc;..\OSAL\Inc;..\APP\Inc;..\Middleware\lwrb\lwrb\src\include\lwrb;..\Middleware\lwbtn\include\lwbtn;..\Middleware\u8g2;..\Middleware\MiaoUI\core;..\Middleware\MiaoUI\display;..\Middleware\MiaoUI\fonts;..\Middleware\MiaoUI\images;..\Middleware\MiaoUI\indev;..\Middleware\MiaoUI\widget;..\Middleware\MiaoUI</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>

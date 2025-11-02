@@ -36,6 +36,7 @@ typedef struct adapter_uart_object{
     adapter_uart_status_e (*pf_uart_recv)(uint8_t *data, uint32_t len, uint32_t timeout);               /**< function pointer to receive data */
     adapter_uart_status_e (*pf_uart_sleep)(void);                                                       /**< function pointer to set sleep */
     adapter_uart_status_e (*pf_uart_weakup)(void);                                                      /**< function pointer to set weakup */
+    adapter_uart_status_e (*pf_uart_start_dma_rx)(uint8_t *buffer, uint32_t size);                      /**< function pointer to start dma rx */
 }adapter_uart_object_t;
 
 /**
@@ -109,6 +110,16 @@ adapter_uart_status_e adapter_uart_sleep(const adapter_uart_object_t *dev);
  * @return adapter_uart_status_e 运行状态
  */
 adapter_uart_status_e adapter_uart_weakup(const adapter_uart_object_t *dev);
+
+/**
+ * @brief 启动串口dma接收
+ * 
+ * @param dev 设备对象
+ * @param buffer 接收缓冲区地址
+ * @param size 缓冲区大小
+ * @return adapter_uart_status_e 
+ */
+adapter_uart_status_e adapter_uart_start_dma_rx(const adapter_uart_object_t *dev, uint8_t *buffer, uint32_t size);
 
 #endif
 

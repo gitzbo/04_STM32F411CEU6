@@ -40,7 +40,7 @@ u8g2_t u8g2;
 void diapInit(u8g2_t *dev)
 {
     // 初始化U8g2库，为OLED显示做准备
-	app_adapter_u8g2_get_object(0, &u8g2);
+//	app_adapter_u8g2_get_object(0, &u8g2);
 }
 
 /**

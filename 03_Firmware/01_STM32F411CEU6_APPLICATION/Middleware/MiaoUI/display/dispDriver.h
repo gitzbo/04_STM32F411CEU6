@@ -31,8 +31,9 @@
 extern "C" {
 #endif
 
-#include "stdint.h"
+#include <stdint.h>
 #include "ui_conf.h"
+#include "u8g2.h"
 
 void diapInit(u8g2_t *dev);
 void Disp_ClearBuffer(void);

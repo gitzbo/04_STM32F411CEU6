@@ -67,6 +67,13 @@ bsp_uart_status_e bsp_uart1_sleep(void);
  */
 bsp_uart_status_e bsp_uart1_weakup(void);
 
+/**
+ * @brief 串口1启动dma接收
+ * 
+ * @param buffer 缓冲区地址
+ * @return bsp_uart_status_e 运行状态
+ */
+bsp_uart_status_e bsp_uart1_start_dma_rx(uint8_t *buffer, uint32_t size);
 
 #endif
 

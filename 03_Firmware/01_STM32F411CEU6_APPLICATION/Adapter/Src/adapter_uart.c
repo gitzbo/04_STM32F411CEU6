@@ -93,7 +93,14 @@ adapter_uart_status_e adapter_uart_weakup(const adapter_uart_object_t *dev)
     return dev->pf_uart_weakup();
 }
 
+adapter_uart_status_e adapter_uart_start_dma_rx(const adapter_uart_object_t *dev, uint8_t *buffer, uint32_t size)
+{
+    if((dev->pf_uart_start_dma_rx == NULL) || (buffer == NULL) || (size == 0)) {
+        return ADAPTER_UART_STATUS_ERROR;
+    }
 
+    return dev->pf_uart_start_dma_rx(buffer, size);
+}
 
 
 

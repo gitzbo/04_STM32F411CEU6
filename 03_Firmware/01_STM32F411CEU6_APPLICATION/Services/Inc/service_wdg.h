@@ -48,7 +48,21 @@ service_wdg_status_e service_wdg_init(void);
  */
 service_wdg_status_e service_wdg_daemon_register(const char *p_task_name, const uint32_t heartbeatTimeoutMs, void (*pf_timeout_cb)(void));
 
+/**
+ * @brief 	 更新指定任务的心跳
+ * @param 	 pTaskName, 守护任务的名称，用于识别特定的任务
+ * @retval 	 0表示心跳成功更新，-1表示参数无效或任务未找到
+ * @author 	 chenningzhan
+ * @note 	 None
+ */
+int service_wdg_daemon_heart_beat(const char *task_name);
 
+/**
+ * @brief 守护线程
+ * 
+ * @param pParams 用户参数
+ */
+void service_wdg_task(void *pParams);
 
 
 #endif

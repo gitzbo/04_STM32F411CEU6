@@ -37,6 +37,13 @@ bsp_iwdg_status_e bsp_iwdg_feed(void)
     return BSP_IWDG_STATUS_OK;
 }
 
+bsp_iwdg_status_e bsp_iwdg_restart(void)
+{
+	HAL_NVIC_SystemReset();
+
+	return BSP_IWDG_STATUS_OK;
+}
+
 
 
 

@@ -19,15 +19,9 @@ bsp_uart_status_e bsp_uart1_init(void)
     return BSP_UART_STATUS_OK;
 }
 
-static bsp_uart_status_e bsp_uart1_deinit(void)
+bsp_uart_status_e bsp_uart1_deinit(void)
 {
     return BSP_UART_STATUS_OK;
-}
-
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
-{
-    if(huart->Instance == USART1) {
-    }
 }
 
 bsp_uart_status_e bsp_uart1_send(const uint8_t *data, uint32_t len, uint32_t timeout)
@@ -56,7 +50,19 @@ bsp_uart_status_e bsp_uart1_weakup(void)
 	return BSP_UART_STATUS_OK;
 }
 
+bsp_uart_status_e bsp_uart1_start_dma_rx(uint8_t *buffer, uint32_t size)
+{
+    if(NULL == buffer) {
+        return BSP_UART_STATUS_ERROR;
+    }
 
+    if(HAL_OK != HAL_UARTEx_ReceiveToIdle_DMA(&huart1, buffer, size))   
+    {
+        return BSP_UART_STATUS_ERROR;
+    }
+
+    return BSP_UART_STATUS_OK;
+}
 
 
 

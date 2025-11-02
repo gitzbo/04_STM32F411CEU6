@@ -38,8 +38,12 @@ bsp_iwdg_status_e bsp_iwdg_deinit(void);
  */
 bsp_iwdg_status_e bsp_iwdg_feed(void);
 
-
-
+/**
+ * @brief 系统重启
+ * 
+ * @return bsp_iwdg_status_e 运行状态
+ */
+bsp_iwdg_status_e bsp_iwdg_restart(void);
 
 
 #endif

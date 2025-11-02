@@ -323,7 +323,7 @@ uint8_t Notifications(ui_t *ui, int16_t x,int16_t y,int16_t targrtW,int16_t targ
  * @param color 要设置的颜色值，类型为uint8_t
  * 该函数用于将全局背景颜色设置为指定的颜色值。
  */
-static void Set_BgColor(ui_t *ui, uint8_t color)
+void Set_BgColor(ui_t *ui, uint8_t color)
 {
     ui->bgColor = color; // 设置背景颜色
 }

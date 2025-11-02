@@ -9,6 +9,15 @@
  * 
  */
 
+#ifndef __SERVICE_UI_H__
+#define __SERVICE_UI_H__
+
+
+
+
+
+
+#endif
 
 
 

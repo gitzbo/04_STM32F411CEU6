@@ -32,7 +32,7 @@
  * Version:         v1.1.0
  */
 #include <string.h>
-#include "lwbtn/lwbtn.h"
+#include "lwbtn.h"
 
 #if LWBTN_CFG_GET_STATE_MODE > 2
 #error "Invalid LWBTN_GET_STATE_MODE_CALLBACK configuration"

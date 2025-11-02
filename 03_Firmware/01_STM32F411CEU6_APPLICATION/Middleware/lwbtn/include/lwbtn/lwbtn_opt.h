@@ -35,7 +35,7 @@
 #define LWBTN_OPT_HDR_H
 
 /* Uncomment to ignore user options (or set macro in compiler flags) */
-/* #define LWBTN_IGNORE_USER_OPTS */
+#define LWBTN_IGNORE_USER_OPTS
 
 /* Include application options */
 #ifndef LWBTN_IGNORE_USER_OPTS

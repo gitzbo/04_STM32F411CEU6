@@ -78,5 +78,14 @@ adapter_iwdg_status_e adapter_iwdg_feed(const adapter_iwdg_object_t *dev)
     return IWDG_DRIVER_OK;
 }
 
+adapter_iwdg_status_e adapter_iwdg_restart(const adapter_iwdg_object_t *dev)
+{
+    if((dev->pf_iwdg_restart == NULL)) {
+        return IWDG_DRIVER_ERROR;
+    }
 
+    dev->pf_iwdg_restart();
+
+    return IWDG_DRIVER_OK;
+}
 
